@@ -1,10 +1,16 @@
 package org.hypergraphdb.app.wordnet.data;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import net.didion.jwnl.data.POS;
 import net.didion.jwnl.util.Resolvable;
+import net.sf.extjwnl.data.POS;
 
 /**
  * Instances of this class enumerate the possible WordNet pointer types,
@@ -14,7 +20,8 @@ import net.didion.jwnl.util.Resolvable;
  * parts-of-speech that it applies to, and a short string that represents it in
  * the dictionary files.
  */
-public final class PtType implements Serializable 
+public final class PtType
+    implements Serializable
 {
 	static final long serialVersionUID = 220886251671304256L;
 	// Flags for tagging a pointer type with the POS types it apples to.
@@ -25,78 +32,78 @@ public final class PtType implements Serializable
 	private static final int LEXICAL = 16;
 
 	// All categories
-	public static final PtType ANTONYM = 
+    public static final PtType ANTONYM =
 		new PtType(Antonym.class, "ANTONYM", "ANTONYM_KEY", N | V | ADJ | ADV | LEXICAL);
-    public static final PtType IN_CATEGORY = 
+    public static final PtType IN_CATEGORY =
     	new PtType(InCategory.class, "IN_CATEGORY", "CATEGORY_DOMAIN_KEY", N | V | ADJ | ADV | LEXICAL);
-    public static final PtType IN_REGION = 
+    public static final PtType IN_REGION =
     	new PtType(InRegion.class, "IN_REGION", "REGION_DOMAIN_KEY", N | V | ADJ | ADV | LEXICAL);
-    public static final PtType USAGE = 
+    public static final PtType USAGE =
     	new PtType(Usage.class, "USAGE_DOMAIN", "USAGE_DOMAIN_KEY", N | V | ADJ | ADV | LEXICAL);
 
-/*    public static final PtType CATEGORY_MEMBER = 
-    	new PtType(CategoryMember.class, "CATEGORY_MEMBER", "CATEGORY_MEMBER_KEY", N);
-    public static final PtType REGION_MEMBER = 
-    	new PtType(RegionMember.class, "REGION_MEMBER", "REGION_MEMBER_KEY", N);
-    public static final PtType USAGE_MEMBER = 
-    	new PtType(UsageMember.class, "USAGE_MEMBER", "USAGE_MEMBER_KEY", N); */
-    
+/*    public static final PtType CATEGORY_MEMBER =
+	new PtType(CategoryMember.class, "CATEGORY_MEMBER", "CATEGORY_MEMBER_KEY", N);
+public static final PtType REGION_MEMBER =
+	new PtType(RegionMember.class, "REGION_MEMBER", "REGION_MEMBER_KEY", N);
+public static final PtType USAGE_MEMBER =
+	new PtType(UsageMember.class, "USAGE_MEMBER", "USAGE_MEMBER_KEY", N); */
+
 	// Nouns and Verbs
 
-	public static final PtType KIND_OF = 
+    public static final PtType KIND_OF =
 		new PtType(KindOf.class, "KIND_OF", "HYPERNYM_KEY", N | V);
-//	public static final PtType HYPONYM = 
+//	public static final PtType HYPONYM =
 //		new PtType(Hyponim.class, "HYPONYM", "HYPONYM_KEY", N | V);
-    public static final PtType NOMINALIZATION = 
+    public static final PtType NOMINALIZATION =
     	new PtType(Nominalization.class, "NOMINALIZATION", "NOMINALIZATION_KEY", N | V);
 
 	// Nouns and Adjectives
 
-	public static final PtType ATTRIBUTE = 
+    public static final PtType ATTRIBUTE =
 		new PtType(Attribute.class, "ATTRIBUTE", "ATTRIBUTE_KEY", N | ADJ);
-	public static final PtType SEE_ALSO = 
+    public static final PtType SEE_ALSO =
 		new PtType(AlsoSee.class, "ALSO_SEE", "ALSO_SEE_KEY", N | V | ADJ | LEXICAL);
 
     // Nouns
 
-    public static final PtType MEMBER_OF = 
+    public static final PtType MEMBER_OF =
     	new PtType(MemberOf.class, "MEMBER_OF", "MEMBER_HOLONYM_KEY", N);
-//    public static final PtType MEMBER_MERONYM = 
-//    	new PtType(MemberMeronym.class, "MEMBER_MERONYM", "MEMBER_MERONYM_KEY", N);    
-    public static final PtType SUBSTANCE_OF = 
+//    public static final PtType MEMBER_MERONYM =
+//    	new PtType(MemberMeronym.class, "MEMBER_MERONYM", "MEMBER_MERONYM_KEY", N);
+    public static final PtType SUBSTANCE_OF =
     	new PtType(SubstanceOf.class, "SUBSTANCE_OF", "SUBSTANCE_HOLONYM_KEY", N);
-//    public static final PtType SUBSTANCE_MERONYM = 
-//    	new PtType(SubstanceMeronym.class, "SUBSTANCE_MERONYM", "SUBSTANCE_MERONYM_KEY", N);    
-    public static final PtType PART_OF = 
+//    public static final PtType SUBSTANCE_MERONYM =
+//    	new PtType(SubstanceMeronym.class, "SUBSTANCE_MERONYM", "SUBSTANCE_MERONYM_KEY", N);
+    public static final PtType PART_OF =
     	new PtType(PartOf.class, "PART_OF", "PART_HOLONYM_KEY", N);
-//    public static final PtType PART_MERONYM = 
+//    public static final PtType PART_MERONYM =
 //    	new PtType(PartMeronym.class, "PART_MERONYM", "PART_MERONYM_KEY", N);
 
     //since WordNet 2.1
-    public static final PtType INSTANCE_OF = 
+    public static final PtType INSTANCE_OF =
     	new PtType(InstanceOf.class, "INSTANCE_OF", "INSTANCE_HYPERNYM_KEY", N);
-//    public static final PtType INSTANCE_HYPONYM = 
+//    public static final PtType INSTANCE_HYPONYM =
 //    	new PtType(InstanceHyponym.class, "INSTANCE_HYPONYM", "INSTANCE_HYPONYM_KEY", N);
-  
+
 	// Verbs
 
-	public static final PtType ENTAILS = 
+    public static final PtType ENTAILS =
 		new PtType(Entails.class, "ENTAILS", "ENTAILMENT_KEY", V);
-	public static final PtType CAUSE = 
+    public static final PtType CAUSE =
 		new PtType(Cause.class, "CAUSE", "CAUSE_KEY", V);
-	public static final PtType VERB_GROUP = 
+    public static final PtType VERB_GROUP =
 		new PtType(VerbGroup.class, "VERB_GROUP", "VERB_GROUP_KEY", V);
 
 	// Adjectives
-	public static final PtType SIMILAR_TO = 
+    public static final PtType SIMILAR_TO =
 		new PtType(Similar.class, "SIMILAR", "SIMILAR_KEY", ADJ);
-	public static final PtType PARTICIPLE_OF = 
+    public static final PtType PARTICIPLE_OF =
 		new PtType(ParticipleOf.class, "PARTICIPLE_OF", "PARTICIPLE_OF_KEY", ADJ | LEXICAL);
-	public static final PtType PERTAINYM = 
+    public static final PtType PERTAINYM =
 		new PtType(Pertainym.class, "PERTAINYM", "PERTAINYM_KEY", ADJ | LEXICAL);
 
 	// Adverbs
-	public static final PtType DERIVED = 
+    public static final PtType DERIVED =
 		new PtType(DerivedFrom.class, "DERIVED", "DERIVED_KEY", ADV);
 
 	/** A list of all <code>PtType</code>s. */
@@ -106,10 +113,10 @@ public final class PtType implements Serializable
 		PARTICIPLE_OF, PERTAINYM, DERIVED
     }));
 
-    private static final Map<POS, Integer> POS_TO_MASK_MAP = new HashMap<POS, Integer>();
-    private static final Map<String, PtType> KEY_TO_POINTER_TYPE_MAP = new HashMap<String, PtType>();
-    private static final Map<Class<? extends SemanticLink>, PtType> CLASS_TO_POINTER_TYPE_MAP = 
-    	new HashMap<Class<? extends SemanticLink>, PtType>();
+    private static final Map<POS, Integer> POS_TO_MASK_MAP = new HashMap<>();
+    private static final Map<String, PtType> KEY_TO_POINTER_TYPE_MAP = new HashMap<>();
+    private static final Map<Class<? extends SemanticLink>, PtType> CLASS_TO_POINTER_TYPE_MAP =
+    	new HashMap<>();
 
     private static boolean _initialized = false;
 
@@ -120,7 +127,7 @@ public final class PtType implements Serializable
             POS_TO_MASK_MAP.put(POS.ADJECTIVE, new Integer(ADJ));
             POS_TO_MASK_MAP.put(POS.ADVERB, new Integer(ADV));
 
-            for (Iterator<PtType> itr = ALL_TYPES.iterator(); itr.hasNext();) 
+            for (Iterator<PtType> itr = ALL_TYPES.iterator(); itr.hasNext();)
             {
                 PtType pt = itr.next();
                 KEY_TO_POINTER_TYPE_MAP.put(pt.getKey(), pt);
@@ -134,24 +141,24 @@ public final class PtType implements Serializable
 	 * Return the <code>PtType</code> whose key matches <var>key</var>.
 	 */
     public static PtType getPointerTypeForKey(String key) {
-		return (PtType) KEY_TO_POINTER_TYPE_MAP.get(key);
+		return KEY_TO_POINTER_TYPE_MAP.get(key);
 	}
-    
+
 	public static PtType getPointerTypeForClass(Class<? extends SemanticLink> key) {
-		return (PtType) CLASS_TO_POINTER_TYPE_MAP.get(key);
+		return CLASS_TO_POINTER_TYPE_MAP.get(key);
 	}
 
     public static List<PtType> getAllPointerTypes() {
         return ALL_TYPES;
     }
 
-    public static List<PtType> getAllPointerTypesForPOS(POS pos) 
+    public static List<PtType> getAllPointerTypesForPOS(POS pos)
     {
-        List<PtType> types = new ArrayList<PtType>();
-        for (Iterator<PtType> itr = ALL_TYPES.iterator(); itr.hasNext();) 
+        List<PtType> types = new ArrayList<>();
+        for (Iterator<PtType> itr = ALL_TYPES.iterator(); itr.hasNext();)
         {
             PtType pt = itr.next();
-            if (pt.appliesTo(pos)) 
+            if (pt.appliesTo(pos))
             {
                 types.add(pt);
             }
@@ -160,7 +167,7 @@ public final class PtType implements Serializable
     }
 
 	private static int getPOSMask(POS pos) {
-		return ((Integer) POS_TO_MASK_MAP.get(pos)).intValue();
+		return POS_TO_MASK_MAP.get(pos).intValue();
 	}
 
 	private Resolvable _label;
@@ -175,7 +182,8 @@ public final class PtType implements Serializable
 		this.setClazz(clazz);
 	}
 
-	public String toString() 
+    @Override
+    public String toString()
 	{
 		return getLabel() + "-" + getKey() + "-" + getClazz().getName();
 	}
@@ -201,7 +209,8 @@ public final class PtType implements Serializable
 		return (_flags & getPOSMask(pos)) != 0;
 	}
 
-	public int hashCode() {
+	@Override
+    public int hashCode() {
 		return getLabel().hashCode();
 	}
 }
